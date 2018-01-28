@@ -1,7 +1,33 @@
-<view class="container">
-  <text class="title">{{ title }}</text>
-  <view class="info">
-    <image src="{{userInfo.avatarUrl}}"/>
-    <text>{{ userInfo.nickName }}</text>
+<view class="container home-background">
+  <image src="../../images/index-bg.png"/>
+  <text class="title">如果想参加抽奖环节，请点击下方按钮完善基本信息</text>
+</view>
+
+<view class="btn-groups">
+  <button type="default" size="default" bindtap="showDialogBtn">完善信息</button>
+  <button type="warn" size="default" bindtap="forwardDiscover">直接进入</button>
+</view>
+
+<!--弹窗-->
+<view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
+<view class="modal-dialog" wx:if="{{showModal}}">
+  <view class="modal-title">联系我们</view>
+  <view class="modal-content">
+    <view class="modal-input">
+      <input placeholder-class="input-holder" type="text" maxlength="10" bindinput="inputName" class="input" placeholder="请输入您的姓名"/>
+    </view>
+    <view class="modal-input">
+      <input placeholder-class="input-holder" type="text" maxlength="11" bindinput="inputPhone" class="input" placeholder="请输入您的联系方式"/>
+    </view>
+    <view class="modal-input">
+      <input placeholder-class="input-holder" type="text" maxlength="20" bindinput="inputCompany" class="input" placeholder="请输入你的公司名称"/>
+    </view>
+    <view class="modal-input">
+      <input placeholder-class="input-holder" type="text" maxlength="10" bindinput="inputTitle" class="input" placeholder="请输入数量您的职位"/>
+    </view>
+  </view>
+  <view class="modal-footer">
+    <view class="btn-cancel" bindtap="onCancel" data-status="cancel">取消</view>
+    <view class="btn-confirm" bindtap="onConfirm" data-status="confirm">确定</view>
   </view>
 </view>

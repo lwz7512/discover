@@ -1,0 +1,15 @@
+<!-- 可用组件：https://mp.weixin.qq.com/debug/wxadoc/dev/component/ -->
+<view class="container home-background">
+  <image src="../../images/discover-bg.png"/>
+</view>
+
+<canvas class="first-canvas" canvas-id="firstCanvas"></canvas>
+
+<view class="section">
+  <input placeholder="输入你的发现..." maxlength="6"
+    placeholder-style="color:#BBBBBB;font-size:32rpx" bindinput="inputKeyWord"/>
+</view>
+
+<button class="next-btn">
+  <icon type="success_no_circle" size="23"></icon>
+</button>
