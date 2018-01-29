@@ -15,7 +15,9 @@ App({
   data: {
     name: 'WeApp Boilerplate',
     version: '0.1.0',
-    userInfo: null
+    userInfo: null,
+    discoverInput: '小白鼠的使命',
+    implementInpt: '大白兔的人生'
   },
 
   // 不是只能定义`data`，别的也可以

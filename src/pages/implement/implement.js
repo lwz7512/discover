@@ -7,13 +7,13 @@ Page({
    * 页面的初始数据
    */
   data: {
-    title: 'discover',
-    canvas:'firstCanvas',
+    title: 'implement',
+    canvas:'secondCanvas',
     input: null,
-    discoverWords: [
-      '海外商机','市场新趋势','瓶颈突破点','运营痛点','行业热点','客户需求',
-      '竞争对手','自身限制','风险','风口','新饭店','芳华已逝','Mr.意中人','抢红包攻略',
-      '蛙儿子不好养','职场真谛','最强王者','初心不改','包治百病','小确幸'
+    implementWords: [
+      '国企走出去','利润翻一翻','收益增长','业务规模扩大','行业领军','一站式服务',
+      '强强联手','企业转型','力挽狂澜','一击即中','体重增加5个点','油腻中年','脱单','手气最佳',
+      '佛系蜕变','升职加薪','一起吃鸡','最初的梦想','平安喜乐','万事顺意'
     ]
   },
 
@@ -23,7 +23,7 @@ Page({
       fillSytle: '#FFFFFF',
       fontSize:  30,
       rotate:    0,
-      text:      '您的发现?',
+      text:      '您的实现?',
       xPos:      100,
       yPos:      220,
       shadow:    true,
@@ -139,7 +139,7 @@ Page({
     }
   ],
 
-  goImplement () {
+  goComplete () {
     if(!this.data.input){
       return wx.showToast({
             title: '写点啥吧亲',
@@ -149,10 +149,10 @@ Page({
         });
     }
     // save to global
-    app.data.discoverInput = this.data.input
+    app.data.implementInpt = this.data.input
 
     wx.navigateTo({
-      url: '../implement/implement'
+      url: '../complete/complete'
     })
   },
 
@@ -191,8 +191,8 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad () {
-    // TODO: onLoad
+  onLoad (opts) {
+    console.log(opts)
   },
 
   /**
@@ -200,7 +200,7 @@ Page({
    */
   onReady () {
     // 随机选择关键字
-    var randomDiscover = this.data.discoverWords.sort(function(){return Math.random()-0.5})
+    var randomDiscover = this.data.implementWords.sort(function(){return Math.random()-0.5})
     // 初始化显示的关键字
     for(var i in this.drawWords){
       if(this.drawWords[i].shadow) continue
@@ -275,5 +275,4 @@ Page({
   onPullDownRefresh () {
     // TODO: onPullDownRefresh
   }
-
 })

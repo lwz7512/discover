@@ -3,13 +3,13 @@
   <image src="../../images/discover-bg.png"/>
 </view>
 
-<canvas class="first-canvas" canvas-id="firstCanvas"></canvas>
+<canvas class="second-canvas" canvas-id="secondCanvas"></canvas>
 
 <view class="section">
-  <input placeholder="输入你的发现..." maxlength="6"
+  <input placeholder="输入你的实现..." maxlength="6"
     placeholder-style="color:#BBBBBB;font-size:32rpx" bindinput="inputKeyWord"/>
 </view>
 
-<button class="next-btn" bindtap="goImplement">
+<button class="next-btn" bindtap="goComplete">
   <icon type="success_no_circle" size="23"></icon>
 </button>

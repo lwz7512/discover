@@ -51,7 +51,6 @@ Page({
     wx.navigateTo({
       url: '../discover/discover'
     })
-    console.log('forwardDiscover...')
   },
 
   /**
