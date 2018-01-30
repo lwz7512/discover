@@ -1,8 +1,8 @@
 <!-- 可用组件：https://mp.weixin.qq.com/debug/wxadoc/dev/component/ -->
-<view class="container home-background">
+<!-- <view class="container home-background">
   <image src="{{background}}"/>
-</view>
-
+</view> -->
+<!-- 让画布铺满屏幕，凡是要生成的都画上去 @2018/01/30 -->
 <canvas class="third-canvas" canvas-id="thirdCanvas"></canvas>
 
 <view class="switch-imgbtn" bindtap="switchImgs">
@@ -17,10 +17,10 @@
   <image src="../../images/icn-bg-3.png" bindtap="changeBG" data-index="3"/>
 </view>
 
-<view class="wish-words">
+<!-- <view class="wish-words">
   <text class="title">毕马威祝您在新的一年里能够发现机遇，实现梦想</text>
-</view>
+</view> -->
 
 <view class="share-btn">
-  <button size="mini">点击分享</button>
+  <button size="mini" bindtap="createImage">点击分享</button>
 </view>

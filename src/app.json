@@ -3,10 +3,10 @@
   // First is default to view
   // https://mp.weixin.qq.com/debug/wxadoc/dev/framework/config.html#pages
   "pages": [
+    "pages/index/index",
     "pages/complete/complete",
     "pages/discover/discover",
     "pages/implement/implement",
-    "pages/index/index",
     "pages/demo/demo"
     // Dont remove this comment
   ],
