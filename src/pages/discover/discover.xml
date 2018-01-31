@@ -3,13 +3,27 @@
   <image src="../../images/discover-bg.png"/>
 </view>
 
-<canvas class="first-canvas" canvas-id="firstCanvas"></canvas>
+<image class="plus-btn" src="../../images/arrow-down-b.png" bindtap="openSelectionDialogue"/>
+
+<canvas class="first-canvas" canvas-id="firstCanvas" wx:if="{{!showModal}}"></canvas>
 
 <view class="section">
-  <input placeholder="输入你的发现..." maxlength="6"
+  <input placeholder="输入你的发现..." maxlength="6" value="{{input}}"
     placeholder-style="color:#BBBBBB;font-size:32rpx" bindinput="inputKeyWord"/>
 </view>
 
 <button class="next-btn" bindtap="goImplement">
   <icon type="success_no_circle" size="23"></icon>
 </button>
+
+<!-- modal dialogue -->
+<view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
+<view class="modal-dialog" wx:if="{{showModal}}">
+  <view class="modal-title">选择关键词</view>
+  <view class="modal-content">
+    <view class="modal-input" wx:for="{{discoverWords}}" data-index="{{index}}" bindtap="selectWord">
+      <text class="title" >{{item.name}}</text>
+    </view>
+
+  </view>
+</view>

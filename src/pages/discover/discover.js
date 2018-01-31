@@ -9,12 +9,90 @@ Page({
   data: {
     title: 'discover',
     canvas:'firstCanvas',
-    input: null,
+    input: '',
     discoverWords: [
-      '海外商机','市场新趋势','瓶颈突破点','运营痛点','行业热点','客户需求',
-      '竞争对手','自身限制','风险','风口','新饭店','芳华已逝','Mr.意中人','抢红包攻略',
-      '蛙儿子不好养','职场真谛','最强王者','初心不改','包治百病','小确幸'
-    ]
+      {
+        name: '海外商机',
+        style:''
+      },
+      {
+        name: '市场新趋势',
+        style:''
+      },
+      {
+        name: '瓶颈突破点',
+        style:''
+      },
+      {
+        name: '运营痛点',
+        style:''
+      },
+      {
+        name: '行业热点',
+        style:''
+      },
+      {
+        name: '客户需求',
+        style:''
+      },
+      {
+        name: '竞争对手',
+        style:''
+      },
+      {
+        name: '自身限制',
+        style:''
+      },
+      {
+        name: '风险',
+        style:''
+      },
+      {
+        name: '风口',
+        style:''
+      },
+      {
+        name: '新饭店',
+        style:''
+      },
+      {
+        name: '芳华已逝',
+        style:''
+      },
+      {
+        name: 'Mr.意中人',
+        style:''
+      },
+      {
+        name: '抢红包攻略',
+        style:''
+      },
+      {
+        name: '蛙儿子不好养',
+        style:''
+      },
+      {
+        name: '职场真谛',
+        style:''
+      },
+      {
+        name: '最强王者',
+        style:''
+      },
+      {
+        name: '初心不改',
+        style:''
+      },
+      {
+        name: '包治百病',
+        style:''
+      },
+      {
+        name: '小确幸',
+        style:''
+      }
+    ],
+    showModal: false
   },
 
   drawWords: [
@@ -139,6 +217,57 @@ Page({
     }
   ],
 
+  imgLoadErr (e) {
+    this.showToast(e.detail.errMsg)
+  },
+
+  imgLoadSucs (e) {
+    this.showToast(JSON.stringify(e.detail), 'none')
+  },
+
+  showToast (title, type) {
+    wx.showToast({
+          title: title,
+          icon: type,
+          // image:'../../images/icon_intro.png',
+          duration: 2000
+    });
+  },
+
+  // FILL TO THE INPUT
+  selectWord (e) {
+    // console.log(e)
+    var index = e.currentTarget.dataset.index
+    // console.log(index)
+    this.setData({input: this.data.discoverWords[index]['name']})
+    // update display
+    this.drawWords.forEach(it => it.seqence==7?it.text = this.data.input:0)
+    this.drawAll()
+    this.setData({showModal: false})
+  },
+
+  openSelectionDialogue () {
+    this.setData({
+      showModal: true
+    })
+  },
+
+  /**
+   * 弹出框蒙层截断touchmove事件
+   * 阻断事件向下传递，避免在弹窗后还可以点击或者滑动蒙层下的界面
+   */
+  preventTouchMove: function () {
+  },
+  /**
+   * 隐藏模态对话框
+   */
+  hideModal: function () {
+    this.setData({
+      showModal: false
+    })
+    this.drawAll()
+  },
+
   goImplement () {
     if(!this.data.input){
       return wx.showToast({
@@ -163,9 +292,13 @@ Page({
    */
   inputKeyWord (evt) {
     // save the input
-    this.data.input = evt.detail.value
+    this.setData({input: evt.detail.value})
     // update display
     this.drawWords.forEach(it => it.seqence==7?it.text = evt.detail.value:0)
+    this.drawAll()
+  },
+
+  drawAll () {
     // redraw
     var context = wx.createCanvasContext(this.data.canvas)
     for(var item of this.drawWords) {
@@ -201,10 +334,12 @@ Page({
   onReady () {
     // 随机选择关键字
     var randomDiscover = this.data.discoverWords.sort(function(){return Math.random()-0.5})
+    // save the reordered words
+    this.setData({discoverWords: randomDiscover})
     // 初始化显示的关键字
     for(var i in this.drawWords){
       if(this.drawWords[i].shadow) continue
-      this.drawWords[i].text = randomDiscover[i]
+      this.drawWords[i].text = randomDiscover[i].name
     }
     // console.log(this.drawWords);
 

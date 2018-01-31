@@ -40,6 +40,24 @@ Page({
   onUnload () {
     console.log(' ---------- onUnload ----------')
   },
+
+  imgLoadErr (e) {
+    this.showToast(e.detail.errMsg)
+  },
+
+  imgLoadSucs (e) {
+    this.showToast(JSON.stringify(e.detail), 'none')
+  },
+
+  showToast (title, type) {
+    wx.showToast({
+      title: title,
+      icon: type,
+      // image:'../../images/icon_intro.png',
+      duration: 2000
+    });
+  },
+
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */

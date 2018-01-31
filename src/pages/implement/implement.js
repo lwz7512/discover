@@ -9,12 +9,13 @@ Page({
   data: {
     title: 'implement',
     canvas:'secondCanvas',
-    input: null,
+    input: '',
     implementWords: [
       '国企走出去','利润翻一翻','收益增长','业务规模扩大','行业领军','一站式服务',
       '强强联手','企业转型','力挽狂澜','一击即中','体重增加5个点','油腻中年','脱单','手气最佳',
       '佛系蜕变','升职加薪','一起吃鸡','最初的梦想','平安喜乐','万事顺意'
-    ]
+    ],
+    showModal: false
   },
 
   drawWords: [
@@ -139,6 +140,43 @@ Page({
     }
   ],
 
+  // FILL TO THE INPUT
+  selectWord (e) {
+    // console.log(e)
+    var index = e.currentTarget.dataset.index
+    // console.log(index)
+    this.setData({input: this.data.implementWords[index]})
+    // update display
+    this.drawWords.forEach(it => it.seqence==7?it.text = this.data.input:0)
+    this.drawAll()
+    this.setData({showModal: false})
+  },
+
+
+  openSelectionDialogue () {
+    this.setData({
+      showModal: true
+    })
+  },
+
+  /**
+   * 弹出框蒙层截断touchmove事件
+   * 阻断事件向下传递，避免在弹窗后还可以点击或者滑动蒙层下的界面
+   */
+  preventTouchMove: function () {
+  },
+
+  /**
+   * 隐藏模态对话框
+   */
+  hideModal: function () {
+    this.setData({
+      showModal: false
+    })
+    this.drawAll()
+  },
+
+
   goComplete () {
     if(!this.data.input){
       return wx.showToast({
@@ -166,6 +204,10 @@ Page({
     this.data.input = evt.detail.value
     // update display
     this.drawWords.forEach(it => it.seqence==7?it.text = evt.detail.value:0)
+    this.drawAll()
+  },
+
+  drawAll () {
     // redraw
     var context = wx.createCanvasContext(this.data.canvas)
     for(var item of this.drawWords) {
@@ -201,6 +243,9 @@ Page({
   onReady () {
     // 随机选择关键字
     var randomDiscover = this.data.implementWords.sort(function(){return Math.random()-0.5})
+    // save the reordered words
+    this.setData({implementWords: randomDiscover})
+
     // 初始化显示的关键字
     for(var i in this.drawWords){
       if(this.drawWords[i].shadow) continue

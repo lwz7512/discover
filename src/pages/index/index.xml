@@ -1,17 +1,17 @@
 <view class="container home-background">
   <image src="../../images/index-bg.png"/>
-  <text class="title">如果想参加抽奖环节，请点击下方按钮完善基本信息</text>
+  <text class="title">你的新年🎁已经在路上，请猛戳下方按钮留下您的收货信息</text>
 </view>
 
 <view class="btn-groups">
-  <button type="default" size="default" bindtap="showDialogBtn">完善信息</button>
+  <button type="default" size="default" bindtap="showDialogBtn">大吉大利 • 毕马威有礼</button>
   <button type="warn" size="default" bindtap="forwardDiscover">直接进入</button>
 </view>
 
 <!--弹窗-->
 <view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
 <view class="modal-dialog" wx:if="{{showModal}}">
-  <view class="modal-title">联系我们</view>
+  <view class="modal-title">大吉大利 • 毕马威有礼</view>
   <view class="modal-content">
     <view class="modal-input">
       <input placeholder-class="input-holder" type="text" maxlength="10" bindinput="inputName" class="input" placeholder="请输入您的姓名"/>
