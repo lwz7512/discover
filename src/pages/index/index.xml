@@ -1,7 +1,8 @@
-<view class="container home-background">
-  <image src="../../images/index-bg.png"/>
-  <text class="title">你的新年🎁已经在路上，请猛戳下方按钮留下您的收货信息</text>
+<view class="container {{bgClass}}">
+  <image src="../../images/index-bg.png" mode="scaleToFill"/>
 </view>
+
+<text class="title">您的新年🎁已经在路上，请猛戳下方按钮留下您的收货信息</text>
 
 <view class="btn-groups">
   <button type="default" size="default" bindtap="showDialogBtn">大吉大利 • 毕马威有礼</button>
@@ -20,10 +21,13 @@
       <input placeholder-class="input-holder" type="text" maxlength="11" bindinput="inputPhone" class="input" placeholder="请输入您的联系方式"/>
     </view>
     <view class="modal-input">
-      <input placeholder-class="input-holder" type="text" maxlength="20" bindinput="inputCompany" class="input" placeholder="请输入你的公司名称"/>
+      <input placeholder-class="input-holder" type="text" maxlength="20" bindinput="inputCompany" class="input" placeholder="请输入您的公司名称"/>
     </view>
     <view class="modal-input">
-      <input placeholder-class="input-holder" type="text" maxlength="10" bindinput="inputTitle" class="input" placeholder="请输入数量您的职位"/>
+      <input placeholder-class="input-holder" type="text" maxlength="10" bindinput="inputTitle" class="input" placeholder="请输入您的职位"/>
+    </view>
+    <view class="modal-input">
+      <input placeholder-class="input-holder" type="text" maxlength="10" bindinput="inputAddress" class="input" placeholder="请输入您的收件地址"/>
     </view>
   </view>
   <view class="modal-footer">

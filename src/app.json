@@ -4,9 +4,9 @@
   // https://mp.weixin.qq.com/debug/wxadoc/dev/framework/config.html#pages
   "pages": [
     "pages/index/index",
-    "pages/implement/implement",
     "pages/discover/discover",
     "pages/complete/complete",
+    "pages/implement/implement",
     "pages/demo/demo"
     // Dont remove this comment
   ],

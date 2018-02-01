@@ -10,7 +10,24 @@
   height: 100rpx;
 }
 
-.section {
+.down-arrow-btn {
+  position: absolute;
+  bottom: 200rpx;
+  left: 63%;
+  border-left: 1px solid #AAAAAA;
+  // 必须加这个不然被输入框挡住了
+  z-index: 1000;
+
+  image {
+    display: block;
+    width: 60rpx;
+    height: 60rpx;
+    margin-top: 4rpx;
+    margin-bottom: 4rpx;
+  }
+}
+
+.input-view {
   position: absolute;
   bottom: 200rpx;
   width: 60%;
@@ -22,7 +39,20 @@
   input {
     margin-left: 20rpx;
   }
+}
 
+.circle-next-btn {
+  position: absolute;
+  bottom: 294rpx;
+  right: 100rpx;
+  border-radius: 50%;
+  line-height: 1.8;
+  font-size: 12px;
+  padding-left: 8px;
+  padding-right: 8px;
+  icon {
+    padding-top: 20rpx;
+  }
 }
 
 .next-btn {
@@ -30,21 +60,24 @@
   bottom: 194rpx;
   right: 100rpx;
   border-radius: 50%;
-  line-height: 1.8;
-  font-size: 12px;
-  padding-left: 8px;
-  padding-right: 8px;
+  background: #F5F5F5;
+  padding: 14rpx;
 
-  icon {
-    padding-top: 20rpx;
+  image {
+    width: 56rpx;
+    height: 56rpx;
+    display: block;
   }
+}
+.next-btn.down {
+  background: #DE4323;
 }
 
 .first-canvas {
   position: absolute;
   top: 10%;
   width: 100%;
-  height: 60%;
+  height: 64%;
 }
 
 // 模态窗口

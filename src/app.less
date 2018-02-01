@@ -19,9 +19,19 @@ page {
   box-sizing: border-box;
 }
 
-.home-background {
+.home-background-low {
   // 背景图
   image {
+    // 适配低版本
+    width: 20em;
+    height: 36em;
+  }
+}
+
+.home-background-high {
+  // 背景图
+  image {
+    // 适配高版本
     height: 100%;
     width: 100%;
   }

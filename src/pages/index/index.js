@@ -1,5 +1,5 @@
 // 获取全局应用程序实例对象
-// const app = getApp()
+const app = getApp()
 
 // 创建页面实例对象
 Page({
@@ -8,19 +8,30 @@ Page({
    */
   data: {
     title: 'Index page',
-    showModal: false
+    showModal: false,
+    userName: '',
+    phone: '',
+    company:'',
+    title:'',
+    address:'',
+    bgClass: ''
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad () {
     console.log(' ---------- onLoad ----------')
+    // console.log(new Date().getTime())
+    var compatiblity = app.checkCompatibility()
+    this.setData({bgClass: compatiblity?'home-background-high':'home-background-low'})
+    if(!compatiblity) this.showToast('兼容模式', 'none')
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady () {
     console.log(' ---------- onReady ----------')
+    // console.log(new Date().getTime())
   },
   /**
    * 生命周期函数--监听页面显示
@@ -108,15 +119,24 @@ Page({
 
   inputName: function (evt) {
     console.log(evt.detail.value)
+    this.setData({userName: evt.detail.value})
   },
   inputPhone: function (evt) {
     console.log(evt.detail.value)
+    this.setData({phone: evt.detail.value})
   },
   inputCompany: function (evt) {
     console.log(evt.detail.value)
+    this.setData({company: evt.detail.value})
   },
   inputTitle: function (evt) {
     console.log(evt.detail.value)
+    this.setData({title: evt.detail.value})
+  },
+
+  inputAddress: function (evt) {
+    console.log(evt.detail.value)
+    this.setData({address: evt.detail.value})
   },
 
   /**

@@ -17,13 +17,15 @@ App({
     version: '0.1.0',
     userInfo: null,
     discoverInput: '小白鼠的使命',
-    implementInpt: '大白兔的人生'
+    implementInpt: '大白兔的人生',
+    platform: '',
+    system: ''
   },
 
   // 不是只能定义`data`，别的也可以
   other: 'other variables',
 
-  /**
+  /** v
    * 获取用户信息
    * @return {Promise} 包含获取用户信息的`Promise`
    */
@@ -45,6 +47,36 @@ App({
    */
   onLaunch () {
     console.log(' ========== Application is launched ========== ')
+    var that = this
+    wx.getSystemInfo({
+      success: function(res) {
+        // console.log(res.model)
+        // console.log(res.pixelRatio)
+        // console.log(res.windowWidth)
+        // console.log(res.windowHeight)
+        // console.log(res.language)
+        // console.log(res.version) // wechat version
+        // console.log(res.platform) // OS type
+        that.data.platform = res.platform
+        // console.log(res.system); // OS version
+        that.data.system = res.system
+
+        // console.log(new Date().getTime())
+        // var checkResult = that.checkCompatibility()
+        // console.log('COMPATIBILITY: '+ checkResult);
+      }
+    })
+  },
+
+  checkCompatibility () {
+    var system = this.data.system
+    var os = system.split(' ')[0]
+    var version = system.split(' ')[1]
+    // console.log(os)
+    // console.log(version)
+    if(os.toLowerCase()=='ios' && Number(version.split('.')[0])<11) return false
+
+    return true
   },
   /**
    * 生命周期函数--监听小程序显示

@@ -57,9 +57,11 @@ Page({
         }
       ],
       btnRoundRect: { // share button
-        x: 40,
+        x: screenWidth - 100,
+        // x: 40,
         y: screenHeight - 116,
-        right: 120,
+        // right: 120,
+        right: screenWidth - 20,
         bottom: screenHeight - 90
       }
     })
@@ -164,7 +166,7 @@ Page({
   showToast (title, type) {
     wx.showToast({
           title: title,
-          icon: type,
+          icon: type?type:'none',
           // image:'../../images/icon_intro.png',
           duration: 2000
     });
@@ -208,9 +210,10 @@ Page({
 
   drawAll (imgPath, imgWidth, imgHeight) {
     var system = wx.getSystemInfoSync()
-    // console.log(system);
     var screenWidth = system.windowWidth
     var screenHeight= system.windowHeight
+    var smallScreen = system.windowHeight>600?false:true
+    // this.showToast('屏幕高度: '+system.windowHeight+', small screen: '+smallScreen, 'none')
     var context = wx.createCanvasContext(this.data.canvas)
     // draw background image
     context.save()
@@ -229,24 +232,32 @@ Page({
     context.rect(startX, startY, rectW, rectH)
     context.stroke()
 
+    var lgFontSize = smallScreen?28:30
+    var nmFontSize = smallScreen?20:24
+
+    // fix text position for iphone5 @2018/02/01
+    startY = smallScreen?startY-10:startY
+
     // draw text
-    this.drawLargeText(context, 30, '发', startX+20, startY+40)
-    this.drawLargeText(context, 30, '现', startX+20, startY+80)
+    this.drawLargeText(context, lgFontSize, '发', startX+20, startY+1.5*lgFontSize)
+    this.drawLargeText(context, lgFontSize, '现', startX+20, startY+2.8*lgFontSize)
 
     var index = 0
     var customDiscoverInput = app.data.discoverInput
+    var nmFontYOffset = 110
+
     for(var char of customDiscoverInput){
-      this.drawLargeText(context, 22, char, startX+24, startY+110+index*28)
+      this.drawLargeText(context, nmFontSize, char, startX+24, startY+nmFontYOffset+index*nmFontSize*1.2)
       index ++
     }
 
-    this.drawLargeText(context, 30, '实', startX+rectW-50, startY+40)
-    this.drawLargeText(context, 30, '现', startX+rectW-50, startY+80)
+    this.drawLargeText(context, lgFontSize, '实', startX+rectW-50, startY+1.5*lgFontSize)
+    this.drawLargeText(context, lgFontSize, '现', startX+rectW-50, startY+2.8*lgFontSize)
 
     var index = 0
     var customImplementInput= app.data.implementInpt
     for(var char of customImplementInput){
-      this.drawLargeText(context, 22, char, startX+rectW-46, startY+110+index*28)
+      this.drawLargeText(context, nmFontSize, char, startX+rectW-46, startY+nmFontYOffset+index*nmFontSize*1.2)
       index ++
     }
 
@@ -259,8 +270,12 @@ Page({
     // draw qrcode image
     context.save()
     context.scale(0.6, 0.6)
-    context.drawImage('../../images/discoverlogo.jpg', screenWidth*1.2, screenHeight*1.3)
+    // context.drawImage('../../images/discoverlogo4.png', screenWidth*1.2, screenHeight*1.34)
+    context.drawImage('../../images/discoverlogo4.png', 70, screenHeight*1.34)
     context.restore()
+
+    var sao_qi_de_hua = '扫一扫，分享你的发现实现'
+    this.drawLargeText(context, 12, sao_qi_de_hua, 40, screenHeight - 20)
 
     // draw kpmg logo
     context.save()

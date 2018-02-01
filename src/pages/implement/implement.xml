@@ -1,20 +1,28 @@
 <!-- 可用组件：https://mp.weixin.qq.com/debug/wxadoc/dev/component/ -->
-<view class="container home-background">
-  <image src="../../images/discover-bg.png"/>
+<view class="container {{bgClass}}">
+  <image src="../../images/discover-bg.png" mode="scaleToFill"/>
 </view>
 
-<image class="plus-btn" src="../../images/arrow-down-b.png" bindtap="openSelectionDialogue"/>
+<!-- <image class="plus-btn" src="../../images/arrow-down-b.png" bindtap="openSelectionDialogue"/> -->
 
 <canvas class="second-canvas" canvas-id="secondCanvas" wx:if="{{!showModal}}"></canvas>
 
-<view class="section">
+<view class="input-view">
   <input placeholder="输入你的实现..." maxlength="6" value="{{input}}"
     placeholder-style="color:#BBBBBB;font-size:32rpx" bindinput="inputKeyWord"/>
 </view>
 
-<button class="next-btn" bindtap="goComplete">
+<view class="down-arrow-btn" bindtap="openSelectionDialogue">
+  <image src="../../images/ios7-arrow-down.png"/>
+</view>
+
+<!-- <button class="next-btn" bindtap="goComplete">
   <icon type="success_no_circle" size="23"></icon>
-</button>
+</button> -->
+
+<view class="next-btn" bindtap="goComplete">
+  <image src="../../images/next-dn.png"/>
+</view>
 
 <!-- modal dialogue -->
 <view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>

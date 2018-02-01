@@ -10,9 +10,10 @@ Page({
     title: 'implement',
     canvas:'secondCanvas',
     input: '',
+    imgBtnSelected: false,
     implementWords: [
       '国企走出去','利润翻一翻','收益增长','业务规模扩大','行业领军','一站式服务',
-      '强强联手','企业转型','力挽狂澜','一击即中','体重增加5个点','油腻中年','脱单','手气最佳',
+      '强强联手','企业转型','力挽狂澜','一击即中','体重涨5个点','油腻中年','脱单','手气最佳',
       '佛系蜕变','升职加薪','一起吃鸡','最初的梦想','平安喜乐','万事顺意'
     ],
     showModal: false
@@ -140,6 +141,16 @@ Page({
     }
   ],
 
+  nextPage () {
+    // this.setData({imgBtnSelected: !this.data.imgBtnSelected})
+  },
+  startTouch () {
+    this.setData({imgBtnSelected: true})
+  },
+  endTouch () {
+    this.setData({imgBtnSelected: false})
+  },
+
   // FILL TO THE INPUT
   selectWord (e) {
     // console.log(e)
@@ -234,7 +245,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad (opts) {
-    console.log(opts)
+    var compatiblity = app.checkCompatibility()
+    this.setData({bgClass: compatiblity?'home-background-high':'home-background-low'})
   },
 
   /**

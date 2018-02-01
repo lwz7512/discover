@@ -10,6 +10,9 @@ Page({
     title: 'discover',
     canvas:'firstCanvas',
     input: '',
+    showModal: false,
+    bgClass: '',
+    imgBtnSelected: false,
     discoverWords: [
       {
         name: '海外商机',
@@ -91,9 +94,8 @@ Page({
         name: '小确幸',
         style:''
       }
-    ],
-    showModal: false
-  },
+    ]
+  }, // end of data.....................
 
   drawWords: [
     {
@@ -217,12 +219,14 @@ Page({
     }
   ],
 
-  imgLoadErr (e) {
-    this.showToast(e.detail.errMsg)
+  nextPage () {
+    // this.setData({imgBtnSelected: !this.data.imgBtnSelected})
   },
-
-  imgLoadSucs (e) {
-    this.showToast(JSON.stringify(e.detail), 'none')
+  startTouch () {
+    this.setData({imgBtnSelected: true})
+  },
+  endTouch () {
+    this.setData({imgBtnSelected: false})
   },
 
   showToast (title, type) {
@@ -325,7 +329,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad () {
-    // TODO: onLoad
+    var compatiblity = app.checkCompatibility()
+    this.setData({bgClass: compatiblity?'home-background-high':'home-background-low'})
   },
 
   /**

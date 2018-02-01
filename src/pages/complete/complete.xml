@@ -1,27 +1,2 @@
 <!-- 可用组件：https://mp.weixin.qq.com/debug/wxadoc/dev/component/ -->
 <canvas class="third-canvas" canvas-id="thirdCanvas" bindtap="canvasTap"></canvas>
-
-<!-- <view class="container home-background">
-  <image src="{{background}}"/>
-</view> -->
-<!-- 让画布铺满屏幕，凡是要生成的都画上去 @2018/01/30 -->
-
-<!-- <view class="switch-imgbtn" bindtap="switchImgs">
-  <image src="../../images/img-dn-icon.png" wx:if="{{btnSelected}}" />
-  <image src="../../images/img-up-icon.png" wx:else />
-</view> -->
-
-<!-- <view class="bglist" wx:if="{{btnSelected}}">
-  <image src="../../images/icn-bg-0.png" bindtap="changeBG" data-index="0"/>
-  <image src="../../images/icn-bg-1.png" bindtap="changeBG" data-index="1"/>
-  <image src="../../images/icn-bg-2.png" bindtap="changeBG" data-index="2"/>
-  <image src="../../images/icn-bg-3.png" bindtap="changeBG" data-index="3"/>
-</view> -->
-
-<!-- <view class="wish-words">
-  <text class="title">毕马威祝您在新的一年里能够发现机遇，实现梦想</text>
-</view> -->
-
-<!-- <view class="share-btn">
-  <button size="mini" bindtap="createImage">点击分享</button>
-</view> -->
