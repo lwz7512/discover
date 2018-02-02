@@ -9,7 +9,7 @@ Page({
    */
   data: {
     title: 'complete',
-    btnSelected: false, // FIXME, ...
+    btnSelected: true, // FIXME, ...
     options: [
       '../../images/opt-bg-0.jpg','../../images/opt-bg-1.jpg',
       '../../images/opt-bg-2.jpg','../../images/opt-bg-3.jpg'

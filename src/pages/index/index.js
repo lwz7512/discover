@@ -12,7 +12,7 @@ Page({
     userName: '',
     phone: '',
     company:'',
-    title:'',
+    position:'',
     address:'',
     bgClass: ''
   },
@@ -63,8 +63,7 @@ Page({
   showToast (title, type) {
     wx.showToast({
       title: title,
-      icon: type,
-      // image:'../../images/icon_intro.png',
+      icon: type?type:'none',
       duration: 2000
     });
   },
@@ -110,11 +109,63 @@ Page({
   onCancel: function () {
     this.hideModal()
   },
+
+  showAlert: function (title) {
+    wx.showToast({
+        title: title,
+        icon: 'none',
+        image:'../../images/icon_intro.png',
+        duration: 2000
+    });
+  },
+
   /**
    * 对话框确认按钮点击事件
    */
   onConfirm: function () {
+    var that = this
+
+    if(!this.data.userName || !this.data.phone || !this.data.company
+      || !this.data.position || !this.data.address) return this.showAlert('亲，请填写完整再提交!')
+
     this.hideModal()
+    wx.showLoading({
+      title: '发送中...',
+    })
+
+    wx.request({
+      url: 'https://demos.kstartup.cn/180202/user',
+      method: 'POST',
+      data: {
+         username: this.data.userName ,
+         contact:  this.data.phone,
+         company:  this.data.company,
+         position: this.data.position,
+         address:  this.data.address
+      },
+      header: {
+          'content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
+      },
+      success: function(res) {
+        wx.hideLoading()
+        console.log(res)
+        if(res.data.meta.code == '200'){
+          that.showToast('发送成功!')
+          setTimeout(function(){// 延迟跳转
+            wx.navigateTo({
+              url: '../discover/discover'
+            })
+          }, 1000)
+        }else{
+          wx.showToast({
+              title: '啊呀出错啦!',
+              icon: 'none',
+              image:'../../images/icon_intro.png',
+              duration: 2000
+          });
+        }
+      }
+    })
   },
 
   inputName: function (evt) {
@@ -131,7 +182,7 @@ Page({
   },
   inputTitle: function (evt) {
     console.log(evt.detail.value)
-    this.setData({title: evt.detail.value})
+    this.setData({position: evt.detail.value})
   },
 
   inputAddress: function (evt) {

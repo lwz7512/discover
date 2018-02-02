@@ -10,7 +10,7 @@
 </view>
 
 <!--弹窗-->
-<view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
+<view class="modal-mask" catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
 <view class="modal-dialog" wx:if="{{showModal}}">
   <view class="modal-title">大吉大利 • 毕马威有礼</view>
   <view class="modal-content">
@@ -27,7 +27,10 @@
       <input placeholder-class="input-holder" type="text" maxlength="10" bindinput="inputTitle" class="input" placeholder="请输入您的职位"/>
     </view>
     <view class="modal-input">
-      <input placeholder-class="input-holder" type="text" maxlength="10" bindinput="inputAddress" class="input" placeholder="请输入您的收件地址"/>
+      <input placeholder-class="input-holder" type="text" maxlength="30" bindinput="inputAddress" class="input" placeholder="请输入您的收件地址"/>
+    </view>
+    <view class="modal-note">
+      我们会在所有参与者中随机抽取赠送发现实现小礼品，毕马威中国对本次活动保留最终解释权
     </view>
   </view>
   <view class="modal-footer">
