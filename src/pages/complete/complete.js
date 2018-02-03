@@ -54,6 +54,11 @@ Page({
           y: screenHeight * 0.24 + 150,
           right: screenWidth,
           bottom: screenHeight * 0.24 + 150 + 40 // width, height = 40
+        },{ // background custom @2018/02/03
+          x: screenWidth - 60,
+          y: screenHeight * 0.24 + 200,
+          right: screenWidth,
+          bottom: screenHeight * 0.24 + 200 + 40 // width, height = 40
         }
       ],
       btnRoundRect: { // share button
@@ -69,7 +74,8 @@ Page({
 
   // TODO: 检测是否点击了按钮
   canvasTap (e) {
-    // console.log(e);
+    var that = this
+
     var clientX = e.touches[0].clientX
     var clientY = e.touches[0].clientY
 
@@ -113,8 +119,28 @@ Page({
       this.setData({background: image})
       this.safeDrawScreen()
     }
+    // access cutomer album
+    var touchedSwitchCustom = this.detectInRect(clientX, clientY, this.data.btnImgs[4])
+    if(touchedSwitchCustom){
+      wx.chooseImage({
+        count: 1, // 默认9
+        sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+        sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+        success: function (res) {
+          // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
+          var tempFilePaths = res.tempFilePaths
+          that.setData({background: tempFilePaths[0]});
+        },
+        fail: (res)=>{
+          that.showToast('选择图片失败!', 'warn')
+        },
+        complete: (res)=>{
+          that.safeDrawScreen()
+        }
+      })
+    }
 
-    // TODO, 检测是否点下了分享按钮, 改变模式
+    // 检测是否点下了分享按钮, 改变模式
     var touchedShareBtn = this.detectInRect(clientX, clientY, this.data.btnRoundRect)
     if(touchedShareBtn){
       // console.log('share btn touched!')
@@ -123,7 +149,7 @@ Page({
         this.createImage()
       })
     }
-  },
+  }, // end of canvasTap
 
   detectInRect (x, y, rect) {
     if(x > rect.x && y > rect.y && x < rect.right && y < rect.bottom) return true
@@ -164,12 +190,14 @@ Page({
   },
 
   showToast (title, type) {
-    wx.showToast({
+    var options = {
           title: title,
           icon: type?type:'none',
           // image:'../../images/icon_intro.png',
           duration: 2000
-    });
+    }
+    if(type == 'warn') options.image = '../../images/icon_intro.png'
+    wx.showToast(options);
   },
 
   /**
@@ -299,6 +327,7 @@ Page({
         context.drawImage('../../images/icn-bg-1-40.png', this.data.btnImgs[1].x, this.data.btnImgs[1].y)
         context.drawImage('../../images/icn-bg-2-40.png', this.data.btnImgs[2].x, this.data.btnImgs[2].y)
         context.drawImage('../../images/icn-bg-3-40.png', this.data.btnImgs[3].x, this.data.btnImgs[3].y)
+        context.drawImage('../../images/icn-bg-c-40.png', this.data.btnImgs[4].x, this.data.btnImgs[4].y)
       }
     }
 
