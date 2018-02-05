@@ -55,7 +55,7 @@ App({
         // console.log(res.windowWidth)
         // console.log(res.windowHeight)
         // console.log(res.language)
-        // console.log(res.version) // wechat version
+        console.log(res.version) // wechat version
         // console.log(res.platform) // OS type
         that.data.platform = res.platform
         // console.log(res.system); // OS version

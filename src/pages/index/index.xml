@@ -1,10 +1,12 @@
 <view class="container {{bgClass}}">
-  <image src="../../images/index-bg.png" mode="scaleToFill"/>
+  <image src="../../images/discover-bg.png" mode="scaleToFill"/>
 </view>
 
-<text class="title">您的新年🎁已经在路上，请猛戳下方按钮留下您的收货信息</text>
+<text class="header">2018心愿单</text>
+<canvas class="gif-canvas" canvas-id="gifCanvas" wx:if="{{!showModal}}"/>
+<text class="title" wx:if="{{showNow}}">分享你的新年心愿，赢发现实现好礼</text>
 
-<view class="btn-groups">
+<view class="btn-groups" wx:if="{{showNow}}">
   <button type="default" size="default" bindtap="showDialogBtn">大吉大利 • 毕马威有礼</button>
   <button type="warn" size="default" bindtap="forwardDiscover">直接进入</button>
 </view>

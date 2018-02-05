@@ -27,10 +27,9 @@ Page({
   onLoad () {
     var system = wx.getSystemInfoSync()
     // console.log(system)
-
     var screenWidth = system.windowWidth
     var screenHeight= system.windowHeight
-
+    // initialize coordinates
     this.setData({
       circleRect: {},// toggle switch button, init in later drawing function
       btnImgs: [
@@ -71,6 +70,7 @@ Page({
       }
     })
   },
+
 
   // TODO: 检测是否点击了按钮
   canvasTap (e) {
@@ -160,7 +160,10 @@ Page({
   createImage () {
     var that = this
 
-    this.showToast('正在生成图片', 'loading')
+    // this.showToast('正在生成图片', 'loading')
+    wx.showLoading({
+      title: '正在生成图片...',
+    })
 
     var system = wx.getSystemInfoSync()
     // console.log(system);
@@ -177,24 +180,29 @@ Page({
         wx.saveImageToPhotosAlbum({
           filePath: res.tempFilePath,
           success: (res) => {
-            that.showToast('请在相册中查看生成的图片', 'success')
+            wx.hideLoading() // hide loading mannually...
+            var info = '请在相册中查看生成的图片，并分享祝福!'
+            wx.showModal({
+              title: '提示',
+              content: info
+            })
             // restore edit mode
             that.setData({editMode: true})
             that.safeDrawScreen()
           }, fail(e) {
-            console.log("err:" + e);
+            that.showToast('保存图片出错啦！', 'warn')
           }
         })
       }
     });// end of canvas to file
-  },
+  },// end of createImage
 
-  showToast (title, type) {
+
+  showToast (title, type, duration) {
     var options = {
-          title: title,
-          icon: type?type:'none',
-          // image:'../../images/icon_intro.png',
-          duration: 2000
+      title: title,
+      icon: 'none',
+      duration: duration?duration:2000
     }
     if(type == 'warn') options.image = '../../images/icon_intro.png'
     wx.showToast(options);
@@ -351,8 +359,7 @@ Page({
     // context.stroke()
     context.setFillStyle(fillColor)
     context.fill()
-
-    this.drawLargeText(context, 14, '点击分享', rect.x+12, rect.y+18)
+    this.drawLargeText(context, 14, '分享祝福', rect.x+12, rect.y+18)
   },
 
   /**

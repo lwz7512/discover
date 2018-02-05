@@ -14,7 +14,43 @@ Page({
     company:'',
     position:'',
     address:'',
-    bgClass: ''
+    bgClass: '',
+    showNow: false,
+    canvas:'gifCanvas',
+    demoWords: [
+      {word: '发', font: 24, row: 0, col: 0, xPos: 0, yPos: 0},
+      {word: '现', font: 24, row: 1, col: 0, xPos: 0, yPos: 0},
+      {word: '客', font: 18, row: 2, col: 0, xPos: 0, yPos: 0},
+      {word: '户', font: 18, row: 3, col: 0, xPos: 0, yPos: 0},
+      {word: '需', font: 18, row: 4, col: 0, xPos: 0, yPos: 0},
+      {word: '求', font: 18, row: 5, col: 0, xPos: 0, yPos: 0},
+      // --------------------
+      {word: '实', font: 24, row: 0, col: 1, xPos: 0, yPos: 0},
+      {word: '现', font: 24, row: 1, col: 1, xPos: 0, yPos: 0},
+      {word: '一', font: 18, row: 2, col: 1, xPos: 0, yPos: 0},
+      {word: '站', font: 18, row: 3, col: 1, xPos: 0, yPos: 0},
+      {word: '式', font: 18, row: 4, col: 1, xPos: 0, yPos: 0},
+      {word: '服', font: 18, row: 5, col: 1, xPos: 0, yPos: 0},
+      {word: '务', font: 18, row: 6, col: 1, xPos: 0, yPos: 0},
+      // -------clear-------------
+      {word: ''},
+      //
+      {word: '发', font: 24, row: 0, col: 0, xPos: 0, yPos: 0},
+      {word: '现', font: 24, row: 1, col: 0, xPos: 0, yPos: 0},
+      {word: '🐶', font: 18, row: 2, col: 0, xPos: 0, yPos: 0},
+      {word: '年', font: 18, row: 3, col: 0, xPos: 0, yPos: 0},
+      {word: '来', font: 18, row: 4, col: 0, xPos: 0, yPos: 0},
+      {word: '袭', font: 18, row: 5, col: 0, xPos: 0, yPos: 0},
+      // --------------------
+      {word: '实', font: 24, row: 0, col: 1, xPos: 0, yPos: 0},
+      {word: '现', font: 24, row: 1, col: 1, xPos: 0, yPos: 0},
+      {word: '单', font: 18, row: 2, col: 1, xPos: 0, yPos: 0},
+      {word: '身', font: 18, row: 3, col: 1, xPos: 0, yPos: 0},
+      {word: '🐶', font: 18, row: 4, col: 1, xPos: 0, yPos: 0},
+      {word: '的', font: 18, row: 5, col: 1, xPos: 0, yPos: 0},
+      {word: '逆', font: 18, row: 6, col: 1, xPos: 0, yPos: 0},
+      {word: '袭', font: 18, row: 7, col: 1, xPos: 0, yPos: 0}
+    ]
   },
   /**
    * 生命周期函数--监听页面加载
@@ -24,15 +60,91 @@ Page({
     // console.log(new Date().getTime())
     var compatiblity = app.checkCompatibility()
     this.setData({bgClass: compatiblity?'home-background-high':'home-background-low'})
-    if(!compatiblity) this.showToast('兼容模式', 'none')
+    // if(!compatiblity) this.showToast('兼容模式', 'none')
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady () {
     console.log(' ---------- onReady ----------')
-    // console.log(new Date().getTime())
+    setTimeout(()=>this.setData({showNow: true}), 6000)
+    // begin to draw
+    var counter = 1
+    var words = this.data.demoWords;
+    var system = wx.getSystemInfoSync()
+    var canvasWidth = system.windowWidth
+    var canvasHeight= system.windowHeight*2/5
+    var startX = canvasWidth/3
+    var startY = 1
+    var rectW = canvasWidth/3
+    var rectH = canvasHeight-2
+    var context = wx.createCanvasContext(this.data.canvas)
+
+    var intvId = setInterval(() => {
+      if(counter == words.length+1) return clearInterval(intvId)
+
+      for(var item of words.slice(0, counter)) {
+
+        if(!item.word) {
+          context.clearRect(0, 0, canvasWidth, canvasHeight)
+          continue
+        }
+        // draw white rectangle
+        context.setLineWidth(2);
+        context.setStrokeStyle("#FFFFFF");
+        context.rect(startX, startY, rectW, rectH)
+        context.stroke()
+
+        item.xPos = startX + 20 + item.col * 50
+        item.yPos = startY + 30 + item.row * 26
+        // context.save()
+        context.setFillStyle('#FFFFFF')
+        context.setFontSize(item.font)
+        context.fillText(item.word, item.xPos, item.yPos)
+        // context.restore()// normal
+      }
+      // 这个不能放在循环里 !
+      context.draw()
+
+      counter ++
+    }, 200)
   },
+
+
+  drawAll () {
+    // begin to draw
+    var counter = 1
+    var words = this.data.demoWords;
+    var system = wx.getSystemInfoSync()
+    var canvasWidth = system.windowWidth
+    var canvasHeight= system.windowHeight*2/5
+    var startX = canvasWidth/3
+    var startY = 1
+    var rectW = canvasWidth/3
+    var rectH = canvasHeight-2
+    var context = wx.createCanvasContext(this.data.canvas)
+
+    for(var item of words.slice(14, words.length)) {
+
+      // draw white rectangle
+      context.setLineWidth(2);
+      context.setStrokeStyle("#FFFFFF");
+      context.rect(startX, startY, rectW, rectH)
+      context.stroke()
+
+      item.xPos = startX + 20 + item.col * 50
+      item.yPos = startY + 30 + item.row * 26
+      // context.save()
+      context.setFillStyle('#FFFFFF')
+      context.setFontSize(item.font)
+      context.fillText(item.word, item.xPos, item.yPos)
+      // context.restore()// normal
+    }
+    // 这个不能放在循环里 !
+    context.draw()
+
+  },
+
   /**
    * 生命周期函数--监听页面显示
    */
@@ -99,9 +211,8 @@ Page({
    * 隐藏模态对话框
    */
   hideModal: function () {
-    this.setData({
-      showModal: false
-    })
+    this.setData({showModal: false})
+    this.drawAll()
   },
   /**
    * 对话框取消按钮点击事件
