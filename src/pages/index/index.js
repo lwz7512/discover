@@ -1,3 +1,7 @@
+/**
+ * v0.11 release officially
+ * @2018/02/07
+ */
 // 获取全局应用程序实例对象
 const app = getApp()
 

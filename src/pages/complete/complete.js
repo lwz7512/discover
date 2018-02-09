@@ -221,7 +221,20 @@ Page({
     })
   },
 
-  drawLargeText (context, fontSize, text, x, y) {
+  // FIXME, add shadow @2018/02/09
+  // drawShadowText (context, fontSize, text, x, y) {
+  //   context.setFillStyle('#666666')
+  //   context.setFontSize(fontSize)
+  //   context.fillText(text, x, y)
+  // },
+
+  drawLargeText (context, fontSize, text, x, y, shadow) {
+    if(shadow){
+      context.setFillStyle('#666666')
+      context.setFontSize(fontSize)
+      context.fillText(text, x+1, y+1)
+      return
+    }
     context.setFillStyle('#FFFFFF')
     context.setFontSize(fontSize)
     context.fillText(text, x, y)
@@ -251,6 +264,10 @@ Page({
     var smallScreen = system.windowHeight>600?false:true
     // this.showToast('屏幕高度: '+system.windowHeight+', small screen: '+smallScreen, 'none')
     var context = wx.createCanvasContext(this.data.canvas)
+
+    // FIXME,  clear before redraw @2018/02/09
+    context.clearRect(0, 0, screenWidth, screenHeight)
+
     // draw background image
     context.save()
     context.scale(screenWidth/imgWidth, screenHeight/imgHeight)
@@ -268,50 +285,12 @@ Page({
     context.rect(startX, startY, rectW, rectH)
     context.stroke()
 
-    var lgFontSize = smallScreen?28:30
-    var nmFontSize = smallScreen?20:24
-
-    // fix text position for iphone5 @2018/02/01
-    startY = smallScreen?startY-10:startY
-
-    // draw text
-    this.drawLargeText(context, lgFontSize, '发', startX+20, startY+1.5*lgFontSize)
-    this.drawLargeText(context, lgFontSize, '现', startX+20, startY+2.8*lgFontSize)
-
-    var index = 0
-    var customDiscoverInput = app.data.discoverInput
-    var nmFontYOffset = 110
-
-    for(var char of customDiscoverInput){
-      this.drawLargeText(context, nmFontSize, char, startX+24, startY+nmFontYOffset+index*nmFontSize*1.2)
-      index ++
-    }
-
-    this.drawLargeText(context, lgFontSize, '实', startX+rectW-50, startY+1.5*lgFontSize)
-    this.drawLargeText(context, lgFontSize, '现', startX+rectW-50, startY+2.8*lgFontSize)
-
-    var index = 0
-    var customImplementInput= app.data.implementInpt
-    for(var char of customImplementInput){
-      this.drawLargeText(context, nmFontSize, char, startX+rectW-46, startY+nmFontYOffset+index*nmFontSize*1.2)
-      index ++
-    }
-
-    // draw kpmg wish for new year
-    var wish1 = '发现机遇，实现梦想'
-    var wish2 = '毕马威祝您在新的一年里心想事成'
-    this.drawLargeText(context, 18, wish1, 40, screenHeight*0.7)
-    this.drawLargeText(context, 18, wish2, 40, screenHeight*0.7+30)
-
     // draw qrcode image
     context.save()
     context.scale(0.6, 0.6)
     // context.drawImage('../../images/discoverlogo4.png', screenWidth*1.2, screenHeight*1.34)
     context.drawImage('../../images/discoverlogo4.png', 70, screenHeight*1.34)
     context.restore()
-
-    var sao_qi_de_hua = '扫一扫，分享你的发现实现'
-    this.drawLargeText(context, 12, sao_qi_de_hua, 40, screenHeight - 20)
 
     // draw kpmg logo
     context.save()
@@ -339,8 +318,84 @@ Page({
       }
     }
 
+    // FIXME, 必须画两遍，不能一起画 @2018/02/09
+    this.drawAllText(system, context, true)
+    this.drawAllText(system, context, false)
+
     // lastly draw it!
     context.draw()
+  },
+
+  drawAllText (system, context, shadow) {
+
+    var screenWidth = system.windowWidth
+    var screenHeight= system.windowHeight
+    var smallScreen = system.windowHeight>600?false:true
+
+    var startX = screenWidth/3
+    var startY = screenHeight/6
+    var rectW = screenWidth/3
+    var rectH = screenHeight*2.24/5
+
+    var lgFontSize = smallScreen?28:30
+    var nmFontSize = smallScreen?20:24
+
+    // fix text position for iphone5 @2018/02/01
+    startY = smallScreen?startY-10:startY
+
+    // draw text
+    if(shadow){
+      this.drawLargeText(context, lgFontSize, '发', startX+20, startY+1.5*lgFontSize, true)
+      this.drawLargeText(context, lgFontSize, '现', startX+20, startY+2.8*lgFontSize, true)
+    }else{
+      this.drawLargeText(context, lgFontSize, '发', startX+20, startY+1.5*lgFontSize)
+      this.drawLargeText(context, lgFontSize, '现', startX+20, startY+2.8*lgFontSize)
+    }
+
+    var customDiscoverInput = app.data.discoverInput
+    var nmFontYOffset = 110
+
+    for(var i=0; i<customDiscoverInput.length; i++){
+      var char = customDiscoverInput[i]
+      if(shadow){
+        this.drawLargeText(context, nmFontSize, char, startX+24, startY+nmFontYOffset+i*nmFontSize*1.2, true)
+      }else{
+        this.drawLargeText(context, nmFontSize, char, startX+24, startY+nmFontYOffset+i*nmFontSize*1.2)
+      }
+    }
+
+    if(shadow){
+      this.drawLargeText(context, lgFontSize, '实', startX+rectW-50, startY+1.5*lgFontSize, true)
+      this.drawLargeText(context, lgFontSize, '现', startX+rectW-50, startY+2.8*lgFontSize, true)
+    }else{
+      this.drawLargeText(context, lgFontSize, '实', startX+rectW-50, startY+1.5*lgFontSize)
+      this.drawLargeText(context, lgFontSize, '现', startX+rectW-50, startY+2.8*lgFontSize)
+    }
+
+    var customImplementInput= app.data.implementInpt
+    for(var j=0; j<customImplementInput.length; j++){
+      var char = customImplementInput[j]
+      if(shadow){
+        this.drawLargeText(context, nmFontSize, char, startX+rectW-46, startY+nmFontYOffset+j*nmFontSize*1.2, true)
+      }else{
+        this.drawLargeText(context, nmFontSize, char, startX+rectW-46, startY+nmFontYOffset+j*nmFontSize*1.2)
+      }
+    }
+
+    // draw kpmg wish for new year
+    var wish1 = '发现机遇，实现梦想'
+    var wish2 = '毕马威祝您在新的一年里心想事成'
+    var sao_qi_de_hua = '扫一扫，分享你的发现实现'
+    if(shadow){
+      this.drawLargeText(context, 18, wish1, 40, screenHeight*0.7, true)
+      this.drawLargeText(context, 18, wish2, 40, screenHeight*0.7+30, true)
+      this.drawLargeText(context, 12, sao_qi_de_hua, 40, screenHeight - 20, true)
+    }else{
+      this.drawLargeText(context, 18, wish1, 40, screenHeight*0.7)
+      this.drawLargeText(context, 18, wish2, 40, screenHeight*0.7+30)
+      this.drawLargeText(context, 12, sao_qi_de_hua, 40, screenHeight - 20)
+    }
+
   },
 
   drawRoundRect (context, rect, radius, fillColor) {
